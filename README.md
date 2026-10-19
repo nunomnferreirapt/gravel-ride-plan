@@ -36,9 +36,11 @@ Claude: Step 2, where to ride. From 14 saved tours near Weesp I combined the gra
 4. `gravel-route-builder` recommends saved Komoot tours by gravel share and scenery, or builds a new route from their best gravel sections.
 5. `gravel-ride-gear` turns the forecast and your own kit list into what to wear, what to pocket, and what you are missing.
 
+**Constraints:** nothing about you is in the skills. Preferences and kit live in two files you edit once, and every skill reads them at run time.
+
 ## Why this exists
 
-I ride gravel around Amsterdam, and planning a ride used to mean five tabs: weather, pollen, an events calendar, Komoot and a guess at clothing. I built these skills so the whole thing happens inside Claude, in one conversation, with my own preferences and kit on file. It is the same habit as the work tools on my profile: when a routine repeats, give the assistant the steps and the data.
+I ride gravel around Amsterdam, and planning a ride used to mean five tabs: weather, pollen, an events calendar, Komoot and a guess at clothing. I built these skills so the whole thing happens inside Claude, in one conversation, with my own preferences and kit on file.
 
 ## Requirements
 
@@ -68,7 +70,7 @@ To run the tests: `uv sync && uv run pytest`.
 
 In Claude Code type `/gravel-ride-plan` with the when, how long and where you have in mind. Each skill also works alone: `/gravel-ride-timing this weekend`, `/gravel-ride-events next two weeks`, `/gravel-route-builder 50 km loop from Weesp, mostly gravel`, `/gravel-ride-gear for Saturday 12:00`.
 
-## How it works
+## How five skills share one preferences file
 
 Each skill is a `SKILL.md` with numbered steps that Claude follows, plus any script or reference file it needs. The plan skill chains the others and asks before each step. Timing pulls all MCP data in one parallel call and ranks days as a spectrum instead of filtering; the hourly window comes from Open-Meteo through `hourly_weather.py`. Events come from `scrape_events.py`, which reads Battistrada, the Maats.cc Shopify API and Ride Out Amsterdam and returns JSON. The route builder scores Komoot tours or asks `komoot-mcp` to combine their gravel sections. Gear reads your inventory file and applies layering rules by feels-like temperature, wind and rain, flagging anything marked `NONE`. Preferences live in one markdown file that every skill reads at run time, so nothing about you is hard-coded in the skills.
 
