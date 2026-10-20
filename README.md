@@ -21,7 +21,7 @@ Claude: Step 2, where to ride. From 14 saved tours near Weesp I combined the gra
         Ankeveense Plassen and Fort Uitermeer. GPX saved. Upload to Komoot?
         ...
 
-        ## Ride Briefing: Saturday 18 Oct, 12:00 to 15:00
+        ## Ride Briefing: Saturday 17 Oct, 12:00 to 15:00
         | Time  | Feels-like | Wind   | Cloud | UV  | Gear change                 |
         | 12:00 | 9 C        | 8 ENE  | 0%    | 3.8 | Start: merino, jersey, vest |
         | 13:00 | 11 C       | 10 ENE | 0%    | 4.1 | Pocket the vest             |
