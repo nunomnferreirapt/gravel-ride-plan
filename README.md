@@ -70,7 +70,7 @@ I ride gravel around Amsterdam, and planning a ride used to mean five tabs: weat
 - [uv](https://docs.astral.sh/uv/) to run the two Python scripts (their dependencies are declared inline, so no install step)
 - MCP servers, registered in Claude Code:
   - [komoot-mcp](https://github.com/nunomnferreirapt/komoot-mcp), optional, for the route step (needs a Komoot account). Without it the other four skills still run
-  - `geocoding-mcp`, `sun-weather-mcp`, `air-quality-mcp` for places, forecasts, air quality, pollen and UV, used by the timing, gear and route skills: [mcp-servers](https://github.com/nunomnferreirapt/mcp-servers). Events and plan run without them
+  - `geocoding-mcp`, `sun-weather-mcp`, `air-quality-mcp` for places, forecasts, air quality, pollen and UV, used by the timing, gear and route skills: [public-mcp-servers](https://github.com/nunomnferreirapt/public-mcp-servers). Events and plan run without them
 
 ## Install
 
