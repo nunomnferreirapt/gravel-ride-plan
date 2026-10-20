@@ -8,7 +8,7 @@ description: Plan a gravel ride near Amsterdam end to end: timing, events, route
 Present each step and ask before invoking it. The user may skip or reorder steps.
 
 1. **When to ride**: `/gravel-ride-timing`. Its last step runs `/gravel-ride-events` automatically, so events on the recommended day appear here without a separate step.
-2. **Where to ride**: `/gravel-route-builder`, to build or recommend a route, or to join a found event.
+2. **Where to ride**: if the `komoot-mcp` server is registered (its tools start with `mcp__komoot-mcp__`), `/gravel-route-builder`, to build or recommend a route, or to join a found event. If it is not, do not run the route builder: ask for the route the user has in mind (start, distance, rough surface) or take the found event's route, and continue.
 3. **What to bring**: `/gravel-ride-gear` for the chosen day's conditions.
 4. **Ride briefing**: once the first three are decided, offer: "Want a ride briefing?"
 

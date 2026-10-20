@@ -30,10 +30,32 @@ Claude: Step 2, where to ride. From 14 saved tours near Weesp I combined the gra
 
 ## What it does
 
+```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 600, "nodeSpacing": 30, "rankSpacing": 32}}}%%
+flowchart TB
+    Q(["You: this weekend, about 3 hours, from Weesp"]):::human
+    P(["Your two files, edited once: preferences and kit"]):::human
+    subgraph FLOW["One conversation, the plan skill asks before each step"]
+        T["`**Claude skill:** when to ride, days ranked by weather, air, pollen, UV, daylight`"]:::sys
+        EV["`**Claude skill:** which events, three Dutch gravel calendars`"]:::sys
+        RB["`**Claude skill:** which route, from your Komoot tours (optional, needs komoot-mcp)`"]:::sys
+        GR["`**Claude skill:** what to wear, the forecast against your kit list`"]:::sys
+        T --> EV --> RB --> GR
+    end
+    Q --> T
+    P --> T
+    GR --> BR["Ride briefing: hour by hour, gear changes, what to pack, gaps"]:::out
+
+    classDef sys fill:#1f3a5f,stroke:#7aa2d8,color:#ffffff
+    classDef human fill:#6b4514,stroke:#e0a95a,color:#ffffff
+    classDef out fill:#1e4d3a,stroke:#6fcf97,color:#ffffff
+    style FLOW fill:transparent,stroke:#7f8c9a,stroke-dasharray:4 3
+```
+
 1. `gravel-ride-plan` runs the guided flow and writes the final briefing.
 2. `gravel-ride-timing` ranks the candidate days from weather, air quality, pollen, UV and daylight, then finds the best 2 to 4 hour window.
 3. `gravel-ride-events` scrapes three public Dutch gravel calendars for rides in that window.
-4. `gravel-route-builder` recommends saved Komoot tours by gravel share and scenery, or builds a new route from their best gravel sections.
+4. `gravel-route-builder`, optional, recommends saved Komoot tours by gravel share and scenery, or builds a new route from their best gravel sections. It needs [komoot-mcp](https://github.com/nunomnferreirapt/komoot-mcp); without it the plan asks for the route you have in mind and moves on.
 5. `gravel-ride-gear` turns the forecast and your own kit list into what to wear, what to pocket, and what you are missing.
 
 **Constraints:** nothing about you is in the skills. Preferences and kit live in two files you edit once, and every skill reads them at run time.
@@ -47,7 +69,7 @@ I ride gravel around Amsterdam, and planning a ride used to mean five tabs: weat
 - Claude Code with skills enabled
 - [uv](https://docs.astral.sh/uv/) to run the two Python scripts (their dependencies are declared inline, so no install step)
 - MCP servers, registered in Claude Code:
-  - [komoot-mcp](https://github.com/nunomnferreirapt/komoot-mcp) for routes (needs a Komoot account)
+  - [komoot-mcp](https://github.com/nunomnferreirapt/komoot-mcp), optional, for the route step (needs a Komoot account). Without it the other four skills still run
   - `geocoding-mcp`, `sun-weather-mcp`, `air-quality-mcp` for places, forecasts, air quality, pollen and UV, used by the timing, gear and route skills: [mcp-servers](https://github.com/nunomnferreirapt/mcp-servers). Events and plan run without them
 
 ## Install
@@ -72,7 +94,7 @@ In Claude Code type `/gravel-ride-plan` with the when, how long and where you ha
 
 ## How five skills share one preferences file
 
-Each skill is a `SKILL.md` with numbered steps that Claude follows, plus any script or reference file it needs. The plan skill chains the others and asks before each step. Timing pulls all MCP data in one parallel call and ranks days as a spectrum instead of filtering; the hourly window comes from Open-Meteo through `hourly_weather.py`. Events come from `scrape_events.py`, which reads Battistrada, the Maats.cc Shopify API and Ride Out Amsterdam and returns JSON. The route builder scores Komoot tours or asks `komoot-mcp` to combine their gravel sections. Gear reads your inventory file and applies layering rules by feels-like temperature, wind and rain, flagging anything marked `NONE`. Preferences live in one markdown file that every skill reads at run time, so nothing about you is hard-coded in the skills.
+Each skill is a `SKILL.md` with numbered steps that Claude follows, plus any script or reference file it needs. The plan skill chains the others and asks before each step. Timing pulls all MCP data in one parallel call and ranks days as a spectrum instead of filtering; the hourly window comes from Open-Meteo through `hourly_weather.py`. Events come from `scrape_events.py`, which reads Battistrada, the Maats.cc Shopify API and Ride Out Amsterdam and returns JSON. The route builder, when `komoot-mcp` is registered, scores Komoot tours or asks the server to combine their gravel sections; when it is not, the plan takes the route you name and goes on to gear. Gear reads your inventory file and applies layering rules by feels-like temperature, wind and rain, flagging anything marked `NONE`. Preferences live in one markdown file that every skill reads at run time, so nothing about you is hard-coded in the skills.
 
 ## Repository layout
 
