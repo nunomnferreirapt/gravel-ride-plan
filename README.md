@@ -30,16 +30,6 @@ Claude: Step 2, where to ride. From 14 saved tours near Weesp I combined the gra
 
 ## What it does
 
-Key:
-
-```mermaid
-flowchart LR
-    K1(["A person decides or acts"]):::human ~~~ K2["A step a system runs"]:::sys ~~~ K3["`**Claude** skill or agent: a step Claude runs`"]:::sys ~~~ K4["What comes out"]:::out
-    classDef sys fill:#1f3a5f,stroke:#7aa2d8,color:#ffffff
-    classDef human fill:#6b4514,stroke:#e0a95a,color:#ffffff
-    classDef out fill:#1e4d3a,stroke:#6fcf97,color:#ffffff
-```
-
 ```mermaid
 %%{init: {"flowchart": {"wrappingWidth": 600, "nodeSpacing": 30, "rankSpacing": 32}}}%%
 flowchart TB
@@ -61,6 +51,8 @@ flowchart TB
     classDef out fill:#1e4d3a,stroke:#6fcf97,color:#ffffff
     style FLOW fill:transparent,stroke:#7f8c9a,stroke-dasharray:4 3
 ```
+
+<img src="assets/diagram-key.svg" alt="Key: rounded amber, a person decides or acts; navy, a step a system runs; Claude in bold, a step Claude runs; green, what comes out">
 
 1. `gravel-ride-plan` runs the guided flow and writes the final briefing.
 2. `gravel-ride-timing` ranks the candidate days from weather, air quality, pollen, UV and daylight, then finds the best 2 to 4 hour window.
