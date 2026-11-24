@@ -52,6 +52,8 @@ flowchart TB
     style FLOW fill:transparent,stroke:#7f8c9a,stroke-dasharray:4 3
 ```
 
+<img src="assets/diagram-key.svg" alt="Key: rounded amber, a person decides or acts; navy, a step a system runs; Claude in bold, a step Claude runs; green, what comes out">
+
 1. `gravel-ride-plan` runs the guided flow and writes the final briefing.
 2. `gravel-ride-timing` ranks the candidate days from weather, air quality, pollen, UV and daylight, then finds the best 2 to 4 hour window.
 3. `gravel-ride-events` scrapes three public Dutch gravel calendars for rides in that window.
